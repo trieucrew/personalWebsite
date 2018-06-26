@@ -1,0 +1,27 @@
+{
+  "name": "personalWebsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trieucrew/personalWebsite.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trieucrew/personalWebsite.git/issues"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "firebase": "^4.13.1",
+    "http": "0.0.0",
+    "request": "^2.85.0"
+  },
+  "homepage": "https://github.com/trieucrew/personalWebsite#readme"
+}
