@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>Portfolioe</title>
+	<title>Portfolio</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,10 +11,33 @@
 	<link href="/css/homepage.css" rel="stylesheet">
 
 	<script src="/js/jquery-1.11.0.js"> </script>
+	<script src="/js/instagram.js"></script>
 	<script type="text/javascript">
 
 	$(document).ready(() => {
+		console.log("ready");
+		$(allInView);
+		$(window).scroll(allInView);
 
+		function isScrolledIntoView(elem) {
+		    var docViewTop = $(window).scrollTop();
+				console.log("docViewTop " + docViewTop);
+		    var docViewBottom = docViewTop + $(window).height();
+				console.log("docViewBottom " + docViewBottom);
+		    var elemTop = $(elem).offset().top;
+				console.log("elemTop " + elemTop);
+		    var elemBottom = elemTop + $(elem).height();
+				console.log("elemBottom " + elemBottom);
+		    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+		}
+
+		function allInView() {
+		  if (isScrolledIntoView($("#container-social"))) {
+					console.log("hello");
+					loadIGphotos(3, "#container-social");
+			}else{
+			}
+		}
 	});
 	</script>
 </head>
@@ -23,20 +46,32 @@
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">WebSiteName</a>
+	      <a class="navbar-brand active" href="#">Insert Logo</a>
 	    </div>
 	    <ul class="nav navbar-nav">
-	      <li class="active"><a href="#">Home</a></li>
-	      <li><a href="#">Page 1</a></li>
-	      <li><a href="#">Page 2</a></li>
-	      <li><a href="#">Page 3</a></li>
+	      <li><a href="#">Portfolio</a></li>
+	      <li><a href="#">About</a></li>
+	      <li><a href="#">Resume</a></li>
 	    </ul>
 	  </div>
 	</nav>
 
-	<div class="container container-main">
-      <h1>Jason Trieu</h1>
+	<div class="container" id="container-main">
+      <h1 id='name'>Jason Trieu</h1>
 	</div>
+
+	<div class="container" id="container-about">
+		<p>Welcome to my website</p>
+	</div>
+
+	<div class="container" id="container-social">
+		<p>Welcome to my website</p>
+	</div>
+
+	<div class="container" id="container-about">
+		<p>Welcome to my website</p>
+	</div>
+
 
 </body>
 </html>
