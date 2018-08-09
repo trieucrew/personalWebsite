@@ -20,9 +20,9 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "firebase": "^4.13.1",
+    "heroku": "^7.7.8",
     "http": "0.0.0",
-    "request": "^2.85.0",
-    "heroku-cli": "6.99.0"
+    "request": "^2.85.0"
   },
   "homepage": "https://github.com/trieucrew/personalWebsite#readme"
 }
