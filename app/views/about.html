@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>Portfolio</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="/css/about.css" rel="stylesheet">
+	<link href="/css/navbar.css" rel="stylesheet">
+
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand active" href="#">Insert Logo</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="#">Portfolio</a></li>
+	      <li><a href="#">About</a></li>
+	      <li><a href="#">Resume</a></li>
+	    </ul>
+	  </div>
+	</nav>
+
+	<div class="container-main">
+		<div class="row">
+			<div class="faq col-lg-9">
+				<h1 style="margin: 30px 15px 10px 30px; font-size: 60px;">About</h1>
+				<hr>
+				<h1>h1</h1>
+				<h1 style="margin: 30px 15px 10px 30px; font-size: 60px;">FAQs</h1>
+				<hr>
+			</div>
+			<div class="chat col-lg-3">
+				<div class="messages">
+				</div>
+				<div class="inputBox">
+					<form autocomplete="off">
+						<input name="userMsg" id="userMsg" type='text' autocomplete="off"/>
+						<a id="submitMsg" class="btn btn-lg">
+		          <span class="glyphicon glyphicon-send"></span>
+		        </a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="/js/jquery-1.11.0.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+<script type="text/javascript">
+	var socket = io.connect();
+	$(document).ready(() => {
+		//initialize socket
+
+		$('#submitMsg').click(() => {
+			event.preventDefault();
+			let userMsg = $('#userMsg').val();
+			socket.emit('userMsg', userMsg);
+			$('#userMsg').val('');
+		});
+
+		$('#userMsg').keydown(e => {
+			if(e.keyCode == 13){
+				event.preventDefault();
+				let userMsg = $('#userMsg').val();
+				socket.emit('userMsg', userMsg);
+				$('#userMsg').val('');
+			}
+		});
+
+		socket.on('chatMsg', msg => {
+			$('.messages').append('<p class="userMessages">' + msg +'</p>');
+			console.log('msg received');
+			console.log(msg);
+		});
+	});
+</script>
+</body>
+</html>
