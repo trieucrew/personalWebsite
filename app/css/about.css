@@ -12,26 +12,46 @@
 .chat {
   border: 5px;
   border-style: double;
-  border-color: white;
+  border-color: black ;
   height: inherit;
-  overflow: scroll;
+  overflow: auto;
   background-color: #334455;
+  padding: 0px 10px;
 }
 
+.login{
+  height:inherit;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.window {
+  background-color: #dddddd;
+  opacity: 50%;
+}
+
+.chatroom{
+  display: none;
+}
 .faq {
   height: inherit;
   background-color: white;
 }
 
-input {
+textarea {
   align-content: center;
   width: 90%;
   background-color: transparent;
   border: 5px;
   padding: 8px;
+  overflow: hidden;
+  resize: none;
+  outline: none;
 }
 
-input[type="text"]
+textarea[type="text"]
 {
     color: #66D666;
     font-size:18px;
@@ -39,23 +59,30 @@ input[type="text"]
 
 .inputBox{
   width: 100%;
-  margin: 5px;
   position:absolute;
   bottom:0;
   right:0;
-  border-style: double;
-  border-width: 1px;
-  background-color: inherit;
+  border-style: solid;
+  border-width: 5px;
+  background-color: #445566;
 }
+
 .messages{
   overflow: auto;
-  display: flex;
-  flex-direction: column-reverse;
   max-height: 95%;
-}
-.userMessages{
-  color: #66D666;
+  color: #AAA;
   font-size: 18px;
+}
+
+.message{
+  display: flex;
+  flex-direction: row;
+}
+
+.message p{
+  margin-bottom: 0px;
+  hyphens: auto;
+  word-wrap: break-word;
 }
 
 #submitMsg{

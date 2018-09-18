@@ -19,7 +19,7 @@
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand active" href="#">Insert Logo</a>
+	      <a class="navbar-brand active" href="/">Home</a>
 	    </div>
 	    <ul class="nav navbar-nav">
 	      <li><a href="#">Portfolio</a></li>
@@ -32,22 +32,40 @@
 	<div class="container-main">
 		<div class="row">
 			<div class="faq col-lg-9">
-				<h1 style="margin: 30px 15px 10px 30px; font-size: 60px;">About</h1>
+				<h1 style="margin: 30px 15px 10px 30px; font-size: 60px;">About This Website</h1><hr />
+				<p>I created this website to showcase my previous works and update visitors on the current projects that I am currently working on and/ or topics that I am studying/ researching. This site was created from scratch using basic HTML/CSS for my front-end and NodeJS for the back-end. There is a contextual chatbot that is fully functional which uses a simple neural network model coded with the Tensorflow javasript library. I am currently working on giving it a more user friendly interface and give the bot a personality that should eventually be close to identical to my own.</p>
+				<h1 style="margin: 30px 15px 10px 30px; font-size: 60px;">About Me</h1>
 				<hr>
-				<h1>h1</h1>
+				<p>Hello, I am currently a student at University of California, San Diego and will be graduating with a Bachelors of Science in Mathematics and Computer Science with a Design minor. I am from the San Gabriel Valley, basically East Los Angeles (near Arcadia and Pasadena if you heard of those cities). </p>
+				<h3>Hobbies</h3><hr />
+				<p>My passions include going to the gym, surfing, watching anime, playing poker with friends, and developing small progressive web apps.</p>
+				<h3>Aspirations</h3><hr />
+				<p></p>
+				<h3>Social</h3><hr />
+				<p></p>
 				<h1 style="margin: 30px 15px 10px 30px; font-size: 60px;">FAQs</h1>
 				<hr>
 			</div>
 			<div class="chat col-lg-3">
-				<div class="messages">
+				<div class="login">
+					<div class="window">
+						<p>Chat as:</p>
+						<input id="username" maxlength="8"/>
+						<button id="submitUser">Sign in</button>
+						<button id="anonSign">Chat as anonymous</button>
+					</div>
 				</div>
-				<div class="inputBox">
-					<form autocomplete="off">
-						<input name="userMsg" id="userMsg" type='text' autocomplete="off"/>
-						<a id="submitMsg" class="btn btn-lg">
-		          <span class="glyphicon glyphicon-send"></span>
-		        </a>
-					</form>
+				<div class="chatroom">
+					<div class="messages">
+					</div>
+					<div class="inputBox">
+						<form autocomplete="off">
+							<textarea name="userMsg" id="userMsg" type='text' autocomplete="off"></textarea>
+							<a id="submitMsg" class="btn btn-lg">
+			          <span class="glyphicon glyphicon-send"></span>
+			        </a>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -56,32 +74,75 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
 <script type="text/javascript">
-	var socket = io.connect();
+	const date = new Date();
+	let socket = io.connect();
 	$(document).ready(() => {
 		//initialize socket
+		$('#username').keydown(e => {
+			if(e.keyCode == 13){
+				e.preventDefault();
+				sessionStorage.username = $('#username').val();
+				displayChat();
+			}
+		});
 
-		$('#submitMsg').click(() => {
+		$('#submitUser').click(event => {
 			event.preventDefault();
-			let userMsg = $('#userMsg').val();
-			socket.emit('userMsg', userMsg);
-			$('#userMsg').val('');
+			sessionStorage.username = $('#username').val();
+			if (sessionStorage.username == '') sessionStorage.username = "Anonymous";
+			displayChat();
+		});
+
+		$('#anonSign').click(event => {
+			event.preventDefault();
+			sessionStorage.username = "Anonymous";
+			displayChat();
+		});
+
+		$('#submitMsg').click(event => {
+			event.preventDefault();
+			sendUserMessage();
 		});
 
 		$('#userMsg').keydown(e => {
 			if(e.keyCode == 13){
-				event.preventDefault();
-				let userMsg = $('#userMsg').val();
-				socket.emit('userMsg', userMsg);
-				$('#userMsg').val('');
+				e.preventDefault();
+				sendUserMessage();
 			}
 		});
 
 		socket.on('chatMsg', msg => {
-			$('.messages').append('<p class="userMessages">' + msg +'</p>');
-			console.log('msg received');
-			console.log(msg);
+			let messages = $('.messages');
+			messages.append('<div class="message">'+'<p>>></p><p>Bot<br/>' +
+			'[' +formatTime() + ']' + '</p>' + '<p style="margin-left: 5px; color: #66D666">'
+			 + msg + '</p></div>');
+			messages[0].scrollTop = messages[0].scrollHeight-messages[0].clientHeight;
 		});
 	});
+
+	function sendUserMessage(){
+		let messages = $('.messages');
+		let userMsg = $('#userMsg').val();
+		messages.append('<div class="message">'+'<p>>></p><p>' +
+		sessionStorage.username + '<br/>' +'[' + formatTime() + ']' +
+		'</p>' +'<p style="margin-left: 5px; color: #66D666">' + userMsg + '</p></div>');
+		socket.emit('userMsg', userMsg);
+		$('#userMsg').val('');
+	}
+
+	function formatTime(){
+		let hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+		let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+		let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+		return hours + ':' + minutes + ':' + seconds;
+	}
+	function displayChat(){
+		let messages = $('.messages');
+		messages.append('<p style="color: white">Entering chatroom as: ' +
+		 sessionStorage.username +'</p>');
+		$('.login').css('display', 'none');
+		$('.chatroom').css('display', 'block');
+	}
 </script>
 </body>
 </html>

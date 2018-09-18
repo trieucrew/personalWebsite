@@ -16,8 +16,8 @@ app.get('/about', (req,res) => {
   res.sendFile(path.join(__dirname+'/app/views/about.html'));
 });
 
-app.get('/views', (req, res) => {
-  res.send('hi');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname+'/app/views/index.html'));
 });
 
 server.listen((process.env.PORT || 5000), () => {
@@ -30,9 +30,11 @@ io.on('connection', socket => {
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-  
+
   socket.on('userMsg', async data => {
+    console.log(data);
     let response = await chatbot.response(data);
+    console.log(response);
     socket.emit('chatMsg', response);
   });
 });
